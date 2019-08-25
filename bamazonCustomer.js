@@ -27,42 +27,56 @@ function start() {
     console.log("=====================================\n");
 
     console.log("\nLIST OF ITEMS:\n")
+    console.log("---------------------\n")
 
     connection.query("SELECT * FROM products", function(err, res) {
       if (err) throw err;
       for (var i = 0; i < res.length; i++) {
         console.log(
-          "\nProduct: " +
+          "Product: " +
             res[i].prodName +
             "\nDeptartment: " +
             res[i].deptName +
             "\nPrice: " +
             res[i].price +
             "\nQuantity: " +
-            res[i].quantity
+            res[i].quantity +
+            "\n\n---------------------\n"
         );
       };
+    
+      inquirer
+        .prompt([
+          {
+            name: "choice",
+            type: "rawlist",
+            choices: function() {
+              var choiceArray = [];
+              for (var i = 0; i < res.length; i++) {
+                choiceArray.push(res[i].prodName);
+              }
+              return choiceArray;
+            },
+            message: "Which product would you like to select?"
+          },
+          {
+            name: "quantity",
+            type: "input",
+            message: "How many would you like to buy?"
+          }
+        ])
+        .then(function(answer) {
+            var chosenItem;
+            for (var i = 0; i < res.length; i++) {
+                if (res[i].prodName === answer.choice) {
+                chosenItem = res[i];
+                }
+            }
+
+            if (chosenItem.quantity >= parseInt(answer.quantity)){
+                console.log("Yehh Bitch");
+            }
+
+        })
     })
-}
-      // once you have the items, prompt the user for which they'd like to bid on
-    //   inquirer
-    //     .prompt([
-    //       {
-    //         name: "choice",
-    //         type: "rawlist",
-    //         choices: function() {
-    //           var choiceArray = [];
-    //           for (var i = 0; i < res.length; i++) {
-    //             choiceArray.push(res[i].prodName);
-    //           }
-    //           return choiceArray;
-    //         },
-    //         message: "Which product would you like to select?"
-    //       },
-    //       {
-    //         name: "quantity",
-    //         type: "input",
-    //         message: "How many would you like to buy?"
-    //       }
-    //     ])
-    //     .then
+    }
