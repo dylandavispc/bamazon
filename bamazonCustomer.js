@@ -91,16 +91,36 @@ function start() {
                       parseInt(answer.quantity) + 
                       " " +
                       chosenItem.prodName +
-                      "(s)!");
-                      start();
+                      "(s)!\n");
+                      question();
                     }
                 );
             }
             else {
-                console.log("Sorry we don't have that much of that product!\n");
-                start();
+                console.log("\nSorry we don't have that much of that product!\n");
+                question();
             }
 
         })
     })
     }
+
+const question = () => {
+    inquirer
+        .prompt([
+            {
+                name: "decision",
+                type: "list",
+                message: "Would you like to buy anything else?",
+                choices: ["YES", "NO"]
+            }
+        ])
+        .then(function(answer) {
+            if (answer.decision === "YES") {
+                start();
+            }
+            else {
+                connection.end();
+            }
+        })
+};
