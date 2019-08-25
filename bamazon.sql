@@ -24,6 +24,6 @@ VALUES ("Flesh Light", "Adult Toys", 34.99,  69),
 ("Star Wars Lingerie", "Costumes", 14.99,  78),
 ("Yoai Enciclopedia", "Video / Books", 19.99,  18),
 ("Economy Butt Plug", "Accessories", 2.99,  143),
-("Star Wars: The Empire Strikes From the Back", "Video / Books", 34,  69);
+("Star Wars: The Empire Strikes From the Back", "Video / Books", 5.69,  3);
 
 SELECT * FROM products;
